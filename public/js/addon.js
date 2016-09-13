@@ -1,33 +1,58 @@
 /* add-on script */
 
 $(document).ready(function () {
+  var simplemde = new SimpleMDE({
+    element: $("#mdEditor")[0],
+    autofocus: true,
+    blockStyles: {
+        bold: "__",
+        italic: "_"
+    },
+    showIcons: ["code", "table"],
+  });
+
 
   // The following functions use the HipChat Javascript API
   // https://developer.atlassian.com/hipchat/guide/javascript-api
 
   //To send a message to the HipChat room, you need to send a request to the add-on back-end
   function sayHello(callback) {
-    //Ask HipChat for a JWT token
-    HipChat.auth.withToken(function (err, token) {
-      if (!err) {
+    HipChat.user.getCurrentUser(function (err, user) {
+      if (err) {
+        console.error(error);
+        return;
+      }
+
+      //Ask HipChat for a JWT token
+      HipChat.auth.withToken(function (err, token) {
+        if (err) {
+          console.error(error);
+          return;
+        };
+
         //Then, make an AJAX call to the add-on backend, including the JWT token
         //Server-side, the JWT token is validated using the middleware function addon.authenticate()
-        $.ajax(
-            {
-              type: 'POST',
-              url: '/send_notification',
-              headers: {'Authorization': 'JWT ' + token},
-              dataType: 'json',
-              data: {messageTitle: 'Hello World!'},
-              success: function () {
-                callback(false);
-              },
-              error: function () {
-                callback(true);
-              }
-            });
-      }
+        $.ajax({
+          type: 'POST',
+          url: '/send_notification',
+          headers: {'Authorization': 'JWT ' + token},
+          contentType: 'application/json',
+          processData: false,
+          data: JSON.stringify({
+            user:    user,
+            message: simplemde.value()
+          }),
+          success: function () {
+            callback(false);
+          },
+          error: function () {
+            callback(true);
+          }
+        });
+      });
     });
+
+
   }
 
   /* Functions used by sidebar.hbs */
@@ -88,6 +113,9 @@ $(document).ready(function () {
         //Otherwise, close the dialog
         closeDialog(true);
       }
+    },
+    "receive-parameters": function(parameters) {
+      simplemde.value(parameters.source)
     }
   });
 

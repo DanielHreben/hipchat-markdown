@@ -2,6 +2,7 @@ var http = require('request');
 var cors = require('cors');
 var uuid = require('uuid');
 var url = require('url');
+const md = require('markdown-it')();
 
 // This is the heart of your HipChat Connect add-on. For more information,
 // take a look at https://developer.atlassian.com/hipchat/tutorials/getting-started-with-atlassian-connect-express-node-js
@@ -125,51 +126,104 @@ module.exports = function (app, addon) {
   app.post('/send_notification',
     addon.authenticate(),
     function (req, res) {
+
+      let source  = req.body.message.trim()
+      let message = md.render(source);
+
+      console.log('req.body.message', req.body.message);
+      console.log('message', message);
+
+      let options = JSON.stringify({
+        // options: {
+        //   title: "aaaaaaa"
+        // },
+        parameters: {
+          source: source
+        }
+      });
+
+      let value = `<a href='#' data-target='sample.dialog' data-target-options='${options}'>Open in editor</a>`;
+      console.log(value);
+
       var card = {
-        "style": "link",
-        "url": "https://www.hipchat.com",
+        "style": "application",
+        // "url": "hipchat://"+req.body.user.mention_name,
         "id": uuid.v4(),
-        "title": req.body.messageTitle,
-        "description": "Great teams use HipChat: Group and private chat, file sharing, and integrations",
-        "icon": {
-          "url": "https://hipchat-public-m5.atlassian.com/assets/img/hipchat/bookmark-icons/favicon-192x192.png"
+        // "format": "small",
+        // "title": req.body.user.name,
+        "title": "View source markdown",
+        "description": {
+          "format": "html",
+          "value": value
+        },
+        // "icon": {
+        //   "url": req.body.user.photo_url
+        // },
+        // "attributes": [{
+        //   "label": "attribute1",
+        //   "value": {
+        //     "label": "value1"
+        //   }
+        // }, {
+        //   "label": "attribute2",
+        //   "value": {
+        //     "icon": {
+        //       "url": "http://bit.ly/1S9Z5dF"
+        //     },
+        //     "label": "value2",
+        //     "style": "lozenge-complete"
+        //   }
+        // }],
+        "activity": {
+          "html": `<img src=${req.body.user.photo_url} width=32px heigth=32px> <b>${req.body.user.name}</b>
+          posts this message using hipchat markdown
+          <br>
+          <br>
+          ${message}`
         }
       };
-      var msg = '<b>' + card.title + '</b>: ' + card.description;
-      var opts = { 'options': { 'color': 'yellow' } };
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, msg, opts, card);
-      res.json({ status: "ok" });
+      var opts = { 'options': { 'color': 'gray' } };
+
+      hipchat
+      .sendMessage(req.clientInfo, req.identity.roomId, message, opts, card)
+      .then(response => {
+        // console.log('reponse', response);
+
+        res.json({ status: "ok" });
+      })
+      .catch(err => cconsole.log(err));
     }
-    );
+  );
 
   // This is an example route to handle an incoming webhook
   // https://developer.atlassian.com/hipchat/guide/webhooks
   app.post('/webhook',
     addon.authenticate(),
     function (req, res) {
-      const pattern = /(^\/md)[\s\n]([\s\S]*)/i;
+      const pattern = /^(\/code md|\/md|\/markdown)[\s\n]([\s\S]*)/i;
 
-      console.log('req.body.item.message.message', req.body.item.message.message);
+
+      // console.log('req.body.item.message.message', req.body.item.message.message);
 
       let [message, command, body] = req.body.item.message.message.match(pattern);
+      // console.log(req.body.item.message);
+      // console.log('message', message);
+      // console.log('command', command);
+      // console.log('body', body);
 
-      console.log('message', message);
-      console.log('command', command);
-      console.log('body', body);
-
-      if (command != '/md') {
+      if (!command || !body) {
         return res.sendStatus(200);
       }
 
 
-      const md = require('markdown-it')();
       let result = md.render(body);
 
-      console.log(req.clientInfo);
-      hipchat.getUser(req.clientInfo).then(user => console.log(user), error => console.log(error));
+      // console.log(result);
 
-      hipchat.sendMessage(req.clientInfo, req.identity.roomId, result)
+      // console.log('render message', req.body.item.message.id, '; result', result);
+
+      hipchat.sendMessage(req.clientInfo, req.identity.roomId, result, {options: {attach_to: req.body.item.message.id}})
         .then(function (data) {
           res.sendStatus(200);
         });

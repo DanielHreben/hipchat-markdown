@@ -7,7 +7,7 @@
         // to make your local add-on server accessible from the internet. You'll also
         // need to specify this property with the base URL of your tunnel:
         // "localBaseUrl": "https://<your-subdomain>.ngrok.com",
-        "localBaseUrl": "https://2bd8e505.ngrok.io",
+        "localBaseUrl": "https://4fd34c7e.ngrok.io",
         // HipChat add-ons don't use asymmetric key algos
         "usePublicKey": false,
         // HipChat add-ons don't support auto registration with HipChat.com so
