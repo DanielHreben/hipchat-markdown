@@ -17,15 +17,12 @@
         "view_room"
       ],
       "avatar": {
-        "url": "{{localBaseUrl}}/img/logo.png",
-        "url@2x": "{{localBaseUrl}}/img/logo.png"
+        "url": "{{localBaseUrl}}/img/markdown_of.png",
+        "url@2x": "{{localBaseUrl}}/img/markdown_of.png"
       }
     },
     "installable": {
       "callbackUrl": "{{localBaseUrl}}/installable"
-    },
-    "configurable": {
-      "url": "{{localBaseUrl}}/config"
     },
     "webhook": {
       "url": "{{localBaseUrl}}/webhook",
@@ -34,44 +31,20 @@
       "name": "Render markdown",
       "authentication": "jwt"
     },
-    "glance": [
-      {
-        "name": {
-          "value": "Hello!"
-        },
-        "queryUrl": "{{localBaseUrl}}/glance",
-        "key": "sample.glance",
-        "target": "sample.sidebar",
-        "icon": {
-          "url": "{{localBaseUrl}}/img/logo.png",
-          "url@2x": "{{localBaseUrl}}/img/logo.png"
-        }
-      }
-    ],
-    "webPanel": [
-      {
-        "key": "sample.sidebar",
-        "name": {
-          "value": "Hello Sidebar!"
-        },
-        "location": "hipchat.sidebar.right",
-        "url": "{{localBaseUrl}}/sidebar"
-      }
-    ],
     "dialog": [
       {
-        "key": "sample.dialog",
+        "key": "editor.dialog",
         "title": {
-          "value": "Hello Dialog!"
+          "value": "Markdown editor"
         },
         "url": "{{localBaseUrl}}/dialog",
         "options": {
           "style": "normal",
           "primaryAction": {
             "name": {
-              "value": "Say Hello!"
+              "value": "Send"
             },
-            "key": "sample.dialog.action",
+            "key": "editor.dialog.action",
             "enabled": true
           },
           "size": {
@@ -83,11 +56,11 @@
     ],
     "action": [
       {
-        "key": "sample.action",
+        "key": "editor.open",
         "name": {
-          "value": "Open Hello Dialog!"
+          "value": "Markdown editor"
         },
-        "target": "sample.dialog",
+        "target": "editor.dialog",
         "location": "hipchat.input.action"
       }
     ]

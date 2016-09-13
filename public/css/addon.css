@@ -23,3 +23,7 @@
   /*border:1px solid #999999;*/
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
+
+.CodeMirror-scroll {
+    min-height: 490px;
+}

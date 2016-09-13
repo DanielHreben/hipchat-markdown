@@ -101,7 +101,7 @@ $(document).ready(function () {
   //Register a listener for the dialog button - primary action "say Hello"
   HipChat.register({
     "dialog-button-click": function (event, closeDialog) {
-      if (event.action === "sample.dialog.action") {
+      if (event.action === "editor.dialog.action") {
         //If the user clicked on the primary dialog action declared in the atlassian-connect.json descriptor:
         sayHello(function (error) {
           if (!error)

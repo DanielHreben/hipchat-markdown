@@ -142,7 +142,7 @@ module.exports = function (app, addon) {
         }
       });
 
-      let value = `<a href='#' data-target='sample.dialog' data-target-options='${options}'>Open in editor</a>`;
+      let value = `<a href='#' data-target='editor.dialog' data-target-options='${options}'>Open in editor</a>`;
       console.log(value);
 
       var card = {
