@@ -1,10 +1,10 @@
 {
   "key": "hipchat-markdown",
   "name": "Hipchat markdown",
-  "description": "Hipchat markdown",
+  "description": "Brings markdown formatting to Hipchat!",
   "vendor": {
     "name": "Daniel Hreben",
-    "url": "https://www.hipchat.com"
+    "url": "http://sdswanderer.github.io/about/"
   },
   "links": {
     "self": "{{localBaseUrl}}/atlassian-connect.json",

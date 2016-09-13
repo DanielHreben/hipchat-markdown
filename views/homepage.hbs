@@ -19,7 +19,7 @@
           <div class="aui-page-header-main intro-header">
             <div class="aui-group">
               <div class="aui-item addon-logo">
-                <img src="http://abotars.hipch.at/bot/{{key}}.png" alt="{{name}}">
+                <img style="border-radius: inherit; border:none; width: 144px;" src="{{furl '/img/markdown_of_home.png'}}" alt="{{name}}">
 
                 <div>
                   <a href="https://www.hipchat.com/addons/install?url={{links.self}}" class="aui-button aui-button-primary"
@@ -45,12 +45,31 @@
         <div class="aui-page-panel-inner">
           <section class="aui-page-panel-item">
             <div class="aui-group">
-              <div class="aui-item">
+              <div class="aui-item" >
+                <h2> Use WYSYVIG editor to write your rich formatted messages</h2>
+                <img src="{{furl '/img/editor.png'}}">
                 <p>
-                  This is a scaffold marketing homepage for your add-on. Use this to show people what your add-on can do.
-                  You can edit this
-                  page in <code>./views/homepage.hbs</code>.
+                  <b>Note: no more tags supported!</b>
+                  All supported markdown features are listed above. <br>
+                  Any others will not render in chat due to Hipchat API limitations, but it will work in WYSYVIG editor.
                 </p>
+                <br/>
+                <img src="{{furl '/img/posted.png'}}">
+                <br/>
+
+                <h2> View markdown source of any posted from editor message </h2>
+                <img src="{{furl '/img/view.png'}}">
+
+                <h2> Use command to get rendered copy of your message </h2>
+                <p>
+                  There are three ways to call a plugin:
+                  <ul>
+                    <li><pre>/md message</pre></li>
+                    <li><pre>/markdown message</pre></li>
+                    <li><pre>/code md message</li>
+                  </ul>
+                </p>
+                <img src="{{furl '/img/chat.png'}}">
               </div>
             </div>
           </section>
