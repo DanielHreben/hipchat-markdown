@@ -9,6 +9,7 @@ $(document).ready(function () {
         italic: "_"
     },
     showIcons: ["code", "table"],
+    hideIcons: ["quote", "heading"]
   });
 
 
