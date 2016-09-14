@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   HipChat.register({
-    'dialog-button-click': function(event, closeDialog) {
+    'dialog-button-click': (event, closeDialog) => {
       Promise.resolve()
       .then(() => {
         if (event.action == 'editor.dialog.action') {
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(() => closeDialog(true))
       .catch(error => console.error(error));
     },
-    'receive-parameters': function(parameters) {
+    'receive-parameters': (parameters) => {
       simplemde.value(parameters.source)
     }
   });
