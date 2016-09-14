@@ -58,8 +58,8 @@ module.exports = function(app, addon) {
       let source = req.body.message.trim()
       let message = md.render(source);
 
-      console.log('req.body.message', req.body.message);
-      console.log('message', message);
+      // console.log('req.body.message', req.body.message);
+      // console.log('message', message);
 
       let options = JSON.stringify({
         parameters: {
