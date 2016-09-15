@@ -35,6 +35,8 @@ function sendNotification(notification) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const storageKey = 'hipchat-markdown';
+
   let simplemde = new SimpleMDE({
     element: document.getElementById('mdEditor'),
     autofocus: true,
@@ -42,23 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
       bold: '__',
       italic: '_'
     },
+    initialValue: localStorage.getItem(storageKey),
     showIcons: ['code', 'table'],
     hideIcons: ['quote', 'heading']
   });
+
+  simplemde.toggleSideBySide();
 
   HipChat.register({
     'dialog-button-click': (event, closeDialog) => {
       Promise.resolve()
       .then(() => {
-        if (event.action == 'editor.dialog.action') {
-          return sendNotification(simplemde.value());
+        let notification = simplemde.value();
+
+        if (event.action != 'editor.dialog.action') {
+          return localStorage.setItem(storageKey, notification);
         }
+
+        return sendNotification(notification)
+        .then(() => localStorage.removeItem(storageKey));
       })
       .then(() => closeDialog(true))
       .catch(error => console.error(error));
-    },
-    'receive-parameters': (parameters) => {
-      simplemde.value(parameters.source)
     }
   });
 });

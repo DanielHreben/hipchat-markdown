@@ -37,7 +37,7 @@
         "title": {
           "value": "Markdown editor"
         },
-        "url": "{{localBaseUrl}}/dialog",
+        "url": "{{localBaseUrl}}/editor",
         "options": {
           "style": "normal",
           "primaryAction": {
@@ -47,6 +47,20 @@
             "key": "editor.dialog.action",
             "enabled": true
           },
+          "size": {
+            "width": "800px",
+            "height": "600px"
+          }
+        }
+      },
+      {
+        "key": "viewer.dialog",
+        "title": {
+          "value": "Markdown viewer"
+        },
+        "url": "{{localBaseUrl}}/viewer",
+        "options": {
+          "style": "normal",
           "size": {
             "width": "800px",
             "height": "600px"

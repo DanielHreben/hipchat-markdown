@@ -40,10 +40,19 @@ module.exports = function(app, addon) {
 
   // This is an example dialog controller that can be launched when clicking on the glance.
   // https://developer.atlassian.com/hipchat/guide/dialog-and-sidebar-views/dialog
-  app.get('/dialog',
+  app.get('/editor',
     addon.authenticate(),
     function(req, res) {
-      res.render('dialog', {
+      res.render('editor', {
+        identity: req.identity
+      });
+    }
+  );
+
+  app.get('/viewer',
+    addon.authenticate(),
+    function(req, res) {
+      res.render('viewer', {
         identity: req.identity
       });
     }
@@ -67,7 +76,7 @@ module.exports = function(app, addon) {
         }
       });
 
-      let value = `<a href='#' data-target='editor.dialog' data-target-options='${options}'>Open in editor</a>`;
+      let value = `<a href='#' data-target='viewer.dialog' data-target-options='${options}'>Open in viewer</a>`;
 
       let card = {
         "style": "application",
