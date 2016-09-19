@@ -1,9 +1,13 @@
 {
   "name": "hipchat-markdown",
+  "description": "Brings markdown formatting to Hipchat!",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=6.5.0"
   },
   "dependencies": {
     "atlassian-connect-express": "^1.0.10",
