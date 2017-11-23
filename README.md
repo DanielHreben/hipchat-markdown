@@ -1,5 +1,7 @@
 # Atlassian Add-on using Express
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/DanielHreben/hipchat-markdown.svg)](https://greenkeeper.io/)
+
 Congratulations! You've successfully created a HipChat Connect Add-on using the Express web application framework.
 
 ## What's next?
